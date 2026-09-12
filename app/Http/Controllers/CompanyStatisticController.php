@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreStatisticRequest;
 use App\Models\CompanyStatistic;
 use Illuminate\Http\Request;
 
@@ -13,6 +14,8 @@ class CompanyStatisticController extends Controller
     public function index()
     {
         //
+        $statistics = CompanyStatistic::orderByDesc('id')->paginate(10);
+        return view('admin.statistics.index', compact('statistics'));
     }
 
     /**
@@ -21,14 +24,18 @@ class CompanyStatisticController extends Controller
     public function create()
     {
         //
+        
+         return view('admin.statistics.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreStatisticRequest $request)
     {
         //
+        
+
     }
 
     /**
