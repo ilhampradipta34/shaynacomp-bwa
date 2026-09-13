@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePrincipleRequest;
+use App\Http\Requests\UpdatePrincipleRequest;
 use App\Models\OurPrinciple;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -55,7 +56,7 @@ class OurPrincipleController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(OurPrinciple $ourPrinciple)
+    public function show(OurPrinciple $principle)
     {
         //
     }
@@ -63,17 +64,35 @@ class OurPrincipleController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(OurPrinciple $ourPrinciple)
+    public function edit(OurPrinciple $principle)
     {
         //
+         return view('admin.principles.edit', compact('principle'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, OurPrinciple $ourPrinciple)
+    public function update(UpdatePrincipleRequest $request, OurPrinciple $principle)
     {
         //
+           DB::transaction(function () use ($request, $principle) {
+            $validated = $request->validated();
+
+            if ($request->hasFile('icon')) {
+                $iconPath= $request->file('icon')->store('icons', 'public');
+                $validated['icon'] = $iconPath;
+            };
+            if ($request->hasFile('thumbnail')) {
+                $thumbnailPath= $request->file('thumbnail')->store('thumbnails', 'public');
+                $validated['thumbnail'] = $thumbnailPath;
+            };
+
+            $principle->update($validated);
+        });
+
+        return redirect()->route('admin.principles.index');
+       
     }
 
     /**
@@ -84,7 +103,7 @@ class OurPrincipleController extends Controller
         //
           DB::transaction(function () use ($principle){
             $principle->delete();
+            });
             return redirect()->route('admin.principles.index');
-        });
     }
 }

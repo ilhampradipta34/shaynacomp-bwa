@@ -28,10 +28,10 @@
                         <h3 class="text-xl font-bold text-indigo-950">{{ $testimonial->created_at->format('M d, Y') }}</h3>
                     </div>
                     <div class="flex-row items-center hidden md:flex gap-x-3">
-                        <a href="{{ route('admin.teams.edit', $testimonial) }} " class="px-6 py-4 font-bold text-white bg-indigo-700 rounded-full">
+                        <a href="{{ route('admin.testimonials.edit', $testimonial) }} " class="px-6 py-4 font-bold text-white bg-indigo-700 rounded-full">
                             Edit
                         </a>
-                        <form action=" {{ route('admin.teams.destroy') }}" method="POST">
+                        <form action=" {{ route('admin.testimonials.destroy', $testimonial) }}" method="POST">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="px-6 py-4 font-bold text-white bg-red-700 rounded-full">
