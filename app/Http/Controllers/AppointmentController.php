@@ -40,6 +40,8 @@ class AppointmentController extends Controller
     public function show(Appointment $appointment)
     {
         //
+         $appointments = Appointment::orderByDesc('id')->paginate(10);
+        return view('admin.appointments.details', compact('appointments'));
     }
 
     /**

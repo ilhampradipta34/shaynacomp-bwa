@@ -16,12 +16,12 @@
                     <div class="flex flex-row items-center gap-x-3">
                         <img src="{{ Storage::url($appointment->product->thumbnail) }} " alt="" class="rounded-2xl object-cover w-[90px] h-[90px]">
                         <div class="flex flex-col">
-                            <h3 class="text-xl font-bold text-indigo-950">{{ $appointment->name }}/h3>
+                            <h3 class="text-xl font-bold text-indigo-950">{{ $appointment->name }}</h3>
                         </div>
                     </div> 
                     <div  class="flex-col hidden md:flex">
                         <p class="text-sm text-slate-500">Budget</p>
-                        <h3 class="text-xl font-bold text-indigo-950">Rp {{ number_format($appointment->budget, 0, ',', '.') }}</h3>
+                        <h3 class="text-xl font-bold text-indigo-950">${{ number_format($appointment->budget, 2, '.', ',') }}</h3>
                     </div>
                     <div  class="flex-col hidden md:flex">
                         <p class="text-sm text-slate-500">Date</p>
@@ -36,6 +36,9 @@
                 @empty
                     <p>No data availbale yet</p>
                 @endforelse
+                <div class="mt-5">
+    {{ $appointments->links() }}
+</div>
             </div>
         </div>
     </div>
